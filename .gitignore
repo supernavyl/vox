@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+wheels/
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# Tooling caches
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+
+# Models / audio scratch (never commit weights or recordings)
+*.bin
+*.gguf
+*.onnx
+*.wav
+*.mp3
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/

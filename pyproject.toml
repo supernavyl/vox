@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "vox"
+version = "0.1.0"
+description = "A state-of-the-art local voice engine (Kokoro TTS) that wraps any LLM."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "supernavyl" }]
+keywords = ["voice", "tts", "stt", "kokoro", "whisper", "llm", "speech", "assistant"]
+
+# Core: audio I/O + the two local models that define the engine's identity.
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.13",
+    "sounddevice>=0.5",
+    "faster-whisper>=1.0",
+    "kokoro>=0.9",
+]
+
+[project.optional-dependencies]
+# LLM backends — install the one(s) you wrap. openai covers any OpenAI-compatible
+# server too (vLLM, llama.cpp, TabbyAPI, LM Studio, Groq, Together, ...).
+ollama = ["ollama>=0.3"]
+openai = ["openai>=1.40"]
+anthropic = ["anthropic>=0.40"]
+# Neural VAD — falls back to energy VAD (zero deps) when absent.
+silero = ["silero-vad>=5.1", "torch>=2.3"]
+all = ["ollama>=0.3", "openai>=1.40", "anthropic>=0.40", "silero-vad>=5.1", "torch>=2.3"]
+
+[project.scripts]
+vox = "vox.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["vox"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
