@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Lint + model-free pipeline tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test dependencies
+        # The pipeline tests use fake LLM/TTS providers, so no models are
+        # downloaded. numpy is the only core dep the import chain needs; the
+        # anthropic SDK lets the provider-seam test construct a real provider.
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy anthropic pytest ruff
+      - name: Ruff lint
+        run: ruff check .
+      - name: Run pipeline tests
+        run: PYTHONPATH=. python -m pytest tests -q
