@@ -1,5 +1,7 @@
 # vox
 
+[![CI](https://github.com/supernavyl/vox/actions/workflows/ci.yml/badge.svg)](https://github.com/supernavyl/vox/actions/workflows/ci.yml)
+
 A state-of-the-art **local voice engine** — Kokoro TTS, faster-whisper STT — that wraps **any LLM** behind one string.
 
 ```
